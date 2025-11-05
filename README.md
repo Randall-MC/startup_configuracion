@@ -20,58 +20,58 @@ Se puede cambiar los colores de la terminal, esto es totalmente opcional.
 
 Ahora en `Settings > Appearance` activa la opción "Use acrylic material in the tab row"
 
-Lo siguiente es instalar un *Prompt theme* que será [**Oh My Posh**](https://ohmyposh.dev/)
+Lo siguiente es instalar un _Prompt theme_ que será [**Oh My Posh**](https://ohmyposh.dev/)
 
 - Dentro de la terminal ejecuta:
 
-~~~pwsh
+```pwsh
  winget install JanDeDobbeleer.OhMyPosh --source winget
-~~~
+```
 
 - Ahora ejecuta:
 
-~~~pwsh
+```pwsh
 oh-my-posh font install
-~~~
+```
 
 - Puedes seleccionar cualquiera, la documentación recomienda utilizar **Meslo**
 - Ahora ve a `Settings > Defaults > Appearance` en **Font face** debajo de **Text** selecciona la fuente que elegiste antes
 - Clic en `Save`
 
-Ahora configuraremos *Oh My Posh*. Consulta la [documentación](https://ohmyposh.dev/docs/installation/prompt) para más información
+Ahora configuraremos _Oh My Posh_. Consulta la [documentación](https://ohmyposh.dev/docs/installation/prompt) para más información
 
-1. Ejecuta:
+- Ejecuta:
 
-~~~pwsh
+```pwsh
 notepad $PROFILE
-~~~
+```
 
-2. Si lo anterior te da error, ejecuta:
+- Si lo anterior te da error, ejecuta:
 
-~~~pwsh
+```pwsh
 New-Item -Path $PROFILE -Type File -Force
-~~~
+```
 
-3. vuelve a ejecutar el paso 1
-4. Dentro del **$PROFILE** agrega:
+- Ahora ejecuta de nuevo el paso anterior
+- Dentro del **$PROFILE** agrega:
 
-~~~pwsh
+```pwsh
 oh-my-posh init pwsh | Invoke-Expression
-~~~
+```
 
-6. Ahora ejecuta:
+- Ahora ejecuta:
 
-~~~pwsh
+```pwsh
 . $PROFILE
-~~~
+```
 
-Con esto hecho, la terminal ya se verá diferente. Podemos elegir el tema que usará la terminal, puedes ver los [temas aquí](https://ohmyposh.dev/docs/themes). Yo usaré el tema ***space***
+Con esto hecho, la terminal ya se verá diferente. Podemos elegir el tema que usará la terminal, puedes ver los [temas aquí](https://ohmyposh.dev/docs/themes). Yo usaré el tema **_space_**
 
 - Agrega `--config 'space'` al $PROFILE, debe verse así:
 
-~~~pwsh
+```pwsh
 oh-my-posh init pwsh --config 'space' | Invoke-Expression
-~~~
+```
 
 ## Terminal Icons
 
@@ -79,16 +79,16 @@ Ahora, agregaré íconos a la terminal, para eso utilizaré el módulo [**Termin
 
 - Ejecuta:
 
-~~~pwsh
+```pwsh
 Install-Module -Name Terminal-Icons -Repository PSGallery
-~~~
+```
 
 - Te preguntará si estas seguro de instalar los módulos, escribe la opción `A` y enter
 - Ahora, dentro de el archivo **$PROFILE**, hay que agregar la línea:
 
-~~~pwsh
+```pwsh
 Import-Module -Name Terminal-Icons
-~~~
+```
 
 ## PSReadLine
 
@@ -96,6 +96,34 @@ Ahora cambiaré el comportamiento de un módulo que ya viene integrado en la nue
 
 - Agrega al archivo $PROFILE:
 
-~~~pwsh
+```pwsh
 Set-PSReadLineOption -PredictionViewStyle ListView
-~~~
+```
+
+## Extras
+
+Puedes aplicar algunos cambios más, esto ya es sugerencia mía
+
+- Ve a `Settings > Defaults > Appearance`
+- Desplázate hacia abajo hasta "**Cursor**"
+- Puedes cambiar el "**Cursor shape**" y el "**Cursor color**"
+- Vuelve a desplazarte hacia abajo hasta "**Transparency**"
+- Configura "**Background opacity**" al 80%
+- Activa la opción "**Enable acrilyc material**"
+
+---
+
+> [!NOTE]
+> Aquí tienes una nota especial
+
+> [!TIP]
+> Aquí tienes un consejo
+
+> [!IMPORTANT]
+> Aquí tienes algo importante
+
+> [!WARNING]
+> Aquí tienes un mensaje de alerta
+
+> [!CAUTION]
+> Aquí tienes una nota para tener cuidado
