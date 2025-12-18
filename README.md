@@ -5,7 +5,12 @@
 
 Con este repositorio pretendo tener una guía para poder configurar un entorno de desarrollo para Windows 11 desde cero, con las herramientas que suelo utilizar para esta plataforma. Quizá este trabajo pueda ayudar a otras personas y no solo a mi. La intención principal es no tener que volver a buscar toda esta información por separado y hacer más rápido este proceso.
 
+---
+
+## Índice
+
 - [Windows 11 - Configuración de entorno de desarrollo JavaScript](#windows-11---configuración-de-entorno-de-desarrollo-javascript)
+  - [Índice](#índice)
   - [Herramientas necesarias](#herramientas-necesarias)
   - [Configuración de la Windows Terminal](#configuración-de-la-windows-terminal)
     - [Comportamiento](#comportamiento)
@@ -13,6 +18,7 @@ Con este repositorio pretendo tener una guía para poder configurar un entorno d
     - [Agregar Color Schemes](#agregar-color-schemes)
   - [Oh My Posh](#oh-my-posh)
   - [Terminal Icons](#terminal-icons)
+  - [Fastfetch](#fastfetch)
   - [PSReadLine](#psreadline)
   - [Entorno de desarrollo con JavaScript](#entorno-de-desarrollo-con-javascript)
     - [fnm - Fast Node Manager](#fnm---fast-node-manager)
@@ -21,7 +27,7 @@ Con este repositorio pretendo tener una guía para poder configurar un entorno d
     - [Configuración de identidad](#configuración-de-identidad)
     - [Alias](#alias)
     - [Generando una nueva clave SSH y agregándola al ssh-agent](#generando-una-nueva-clave-ssh-y-agregándola-al-ssh-agent)
-  - [Temas](#temas)
+      - [Recursos](#recursos)
 
 ---
 
@@ -153,12 +159,64 @@ Ahora, agregaré íconos a la terminal, para eso utilizaré el módulo [**Termin
 Install-Module -Name Terminal-Icons -Repository PSGallery
 ```
 
-- Te preguntará si estas seguro de instalar los módulos, escribe la opción `A` y enter
+- Te preguntará si estas seguro de instalar los módulos, escribe la opción `Y` y enter
 - Ahora, dentro de el archivo _...profile.ps1_, hay que agregar la línea:
 
 ```pwsh
 Import-Module -Name Terminal-Icons
 ```
+
+---
+
+## Fastfetch
+
+Fastfetch es una herramienta para obtener información del sistema (como recursos cpu, memoria) y mostrarla visualmente de manera atractiva.
+
+- Instalación
+
+```pwsh
+winget install fastfetch
+```
+
+> [!WARNING]
+> Reemplaza "_usuario_" por tu usuario 😒
+
+- Navega hacia `C:\Users\usuario`
+- Crea una nueva carpeta con el nombre `.config`
+- Clic derecho sobre `.config`
+- Click en **Mostrar Más opciones**
+- Clic en **Propiedades**
+- Activa la opción **Oculto** ⏹️
+- Clic en el botón **Aplicar**
+- Clic en el botón **Aceptar**
+
+Dentro de la carpeta `.config`
+
+- Crea una nueva carpeta con el nombre `fastfetch`
+- Copia los archivos `ascii.txt` y `config.jsonc` [(los encuentras aquí)](./fastfetch)
+- Dentro del archivo `config.jsonc`
+- Reemplaza `%USERPROFILE%` por tu nombre de usuario
+
+Agrega lo siguiente dentro del archivo _...profile.ps1_
+
+```bash
+# Minimal profile: UTF‑8 + Oh My Posh (if installed) + Fastfetch with explicit config path
+try {
+    [Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+    chcp 65001 > $null
+} catch {}
+
+Clear-Host
+
+# Force Fastfetch to use YOUR config every time (bypass path confusion)
+if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
+    fastfetch -c "C:/Users/%USERPROFILE%/.config/fastfetch/config.jsonc"
+}
+```
+
+Reemplaza `%USERPROFILE%` por tu nombre de usuario
 
 ---
 
@@ -277,125 +335,10 @@ ssh -T git@github.com
 
 ---
 
-## Temas
+#### Recursos
 
-```json
-"schemes":
-    [
-        {
-          "name": "Monokai Vivid",
-          "background": "#121212",
-          "black": "#121212",
-          "blue": "#0443FF",
-          "brightBlack": "#838383",
-          "brightBlue": "#0443FF",
-          "brightCyan": "#51CEFF",
-          "brightGreen": "#B1E05F",
-          "brightPurple": "#F200F6",
-          "brightRed": "#F6669D",
-          "brightWhite": "#FFFFFF",
-          "brightYellow": "#FFF26D",
-          "cursorColor": "#FB0007",
-          "cyan": "#01B6ED",
-          "foreground": "#F9F9F9",
-          "green": "#98E123",
-          "purple": "#F800F8",
-          "red": "#FA2934",
-          "selectionBackground": "#FFFFFF",
-          "white": "#FFFFFF",
-          "yellow": "#FFF30A"
-        },
-        {
-          "name": "Oceanic-Next",
-          "background": "#121B21",
-          "black": "#121C21",
-          "blue": "#5486C0",
-          "brightBlack": "#52606B",
-          "brightBlue": "#5486C0",
-          "brightCyan": "#50A5A4",
-          "brightGreen": "#89BD82",
-          "brightPurple": "#B77EB8",
-          "brightRed": "#E44754",
-          "brightWhite": "#FFFFFF",
-          "brightYellow": "#F7BD51",
-          "cursorColor": "#B3B8C3",
-          "cyan": "#50A5A4",
-          "foreground": "#B3B8C3",
-          "green": "#89BD82",
-          "purple": "#B77EB8",
-          "red": "#E44754",
-          "selectionBackground": "#3E4953",
-          "white": "#FFFFFF",
-          "yellow": "#F7BD51"
-        },
-        {
-          "name": "TokyoNight",
-          "background": "#16161E",
-          "black": "#363B54",
-          "blue": "#7AA2F7",
-          "brightBlack": "#363B54",
-          "brightBlue": "#7AA2F7",
-          "brightCyan": "#7DCFFF",
-          "brightGreen": "#41A6B5",
-          "brightPurple": "#BB9AF7",
-          "brightRed": "#F7768E",
-          "brightWhite": "#ACB0D0",
-          "brightYellow": "#E0AF68",
-          "cursorColor": "#FFFFFF",
-          "cyan": "#7DCFFF",
-          "foreground": "#787C99",
-          "green": "#41A6B5",
-          "purple": "#BB9AF7",
-          "red": "#F7768E",
-          "selectionBackground": "#FFFFFF",
-          "white": "#787C99",
-          "yellow": "#E0AF68"
-        },
-        {
-          "name": "Tomorrow Night",
-          "background": "#1D1F21",
-          "black": "#000000",
-          "blue": "#81A2BE",
-          "brightBlack": "#000000",
-          "brightBlue": "#81A2BE",
-          "brightCyan": "#8ABEB7",
-          "brightGreen": "#B5BD68",
-          "brightPurple": "#B294BB",
-          "brightRed": "#CC6666",
-          "brightWhite": "#FFFFFF",
-          "brightYellow": "#F0C674",
-          "cursorColor": "#C5C8C6",
-          "cyan": "#8ABEB7",
-          "foreground": "#C5C8C6",
-          "green": "#B5BD68",
-          "purple": "#B294BB",
-          "red": "#CC6666",
-          "selectionBackground": "#373B41",
-          "white": "#FFFFFF",
-          "yellow": "#F0C674"
-        },
-        {
-          "name": "tokyonight",
-          "background": "#1A1B26",
-          "black": "#15161E",
-          "blue": "#7AA2F7",
-          "brightBlack": "#414868",
-          "brightBlue": "#7AA2F7",
-          "brightCyan": "#7DCFFF",
-          "brightGreen": "#9ECE6A",
-          "brightPurple": "#BB9AF7",
-          "brightRed": "#F7768E",
-          "brightWhite": "#C0CAF5",
-          "brightYellow": "#E0AF68",
-          "cursorColor": "#C0CAF5",
-          "cyan": "#7DCFFF",
-          "foreground": "#C0CAF5",
-          "green": "#9ECE6A",
-          "purple": "#BB9AF7",
-          "red": "#F7768E",
-          "selectionBackground": "#33467C",
-          "white": "#A9B1D6",
-          "yellow": "#E0AF68"
-        }
-    ],
-```
+Tomé ideas de algunos vídeos para poder realizar este trabajo. También claro de la documentación oficial de los recursos que menciono, los cuales dejé enlaces para esos recursos.
+
+[Cómo configurar tu terminal para que sea asombrosa en Windows 11](https://www.youtube.com/watch?v=6SGIFVJ5Izs) - HolaMundo
+
+[Your terminal is boring… Fix it!](https://www.youtube.com/watch?v=z3NpVq-y6jU) - SleepyCatHey
