@@ -303,13 +303,15 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 **Paso 2**: Agregar la clave al agente SSH
 
-- Inicia el agente SSH
+- En una nueva ventana de laterminal con permisos de administrador (Solo para este paso), inicia el agente SSH
 
 ```bash
-eval "$(ssh-agent -s)"
+# start the ssh-agent in the background
+Get-Service -Name ssh-agent | Set-Service -StartupType Manual
+Start-Service ssh-agent
 ```
 
-- Agrega tu clave privada al agente:
+- En una ventana de la terminal sin permisos de administrador, agrega tu clave privada al agente:
 
 ```bash
 ssh-add ~/.ssh/id_ed25519
@@ -317,13 +319,13 @@ ssh-add ~/.ssh/id_ed25519
 
 **Paso 3**: Agregar clave pública a GitHub
 
-- Retrieve your public key:
+- Copia tu clave pública:
 
 ```bash
-cat ~/.ssh/id_ed25519.pub
+cat ~/.ssh/id_ed25519.pub | clip
 ```
 
-- Copia la salida y agrégala a tu cuenta de GitHub en Configuración > SSH y claves GPG.
+- Ahora agrégala a tu cuenta de GitHub en **Configuración** > **SSH** y **claves SSH**.
 
 **Paso 4**: Probar la conexión
 
